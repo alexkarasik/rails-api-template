@@ -1,24 +1,25 @@
-class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :update, :destroy]
+class ItemsController < OpenReadController
+  before_action :set_item, only: [:update, :destroy]
 
   # GET /items
   def index
-    @items = Item.all
+    @items = current_user.items.all
 
     render json: @items
   end
 
   # GET /items/1
   def show
+    @item = Item.find(params[:id])
     render json: @item
   end
 
   # POST /items
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
 
     if @item.save
-      render json: @item, status: :created, location: @item
+      render json: @item, status: :created
     else
       render json: @item.errors, status: :unprocessable_entity
     end
@@ -38,14 +39,16 @@ class ItemsController < ApplicationController
     @item.destroy
   end
 
-  private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
     end
+    private :set_item
 
     # Only allow a trusted parameter "white list" through.
     def item_params
       params.require(:item).permit(:quantity, :totalprice)
     end
+    private :item_params
 end

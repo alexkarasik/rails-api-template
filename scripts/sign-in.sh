@@ -1,5 +1,5 @@
 #!/bin/bash
-
+EMAIL="alexk" PASSWORD='alexk' PASSWORD_CONFIRMATION='alexk'
 API="${API_ORIGIN:-http://localhost:4741}"
 URL_PATH="/sign-in"
 curl "${API}${URL_PATH}" \
