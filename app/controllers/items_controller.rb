@@ -3,7 +3,7 @@ class ItemsController < OpenReadController
 
   # GET /items
   def index
-    @items = current_user.items.all
+    @items = Item.all
 
     render json: @items
   end
